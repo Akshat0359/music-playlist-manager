@@ -43,7 +43,7 @@ Music Playlist Manager (Harmonix) lets users organize their music into named pla
 
 ```bash
 # 1. Clone the repository
-git clone <repository-url>
+git clone https://github.com/Akshat0359/music-playlist-manager
 cd music-playlist-manager
 
 # 2. Install dependencies
