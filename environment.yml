@@ -1,0 +1,9 @@
+name: music-playlist-manager
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.11
+  - nodejs=20
+  - pip

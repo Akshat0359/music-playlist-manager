@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Light theme (default) */
+  :root {
+    --surface-900: 248 250 252;
+    --surface-800: 255 255 255;
+    --surface-700: 241 245 249;
+    --surface-600: 226 232 240;
+    --surface-500: 203 213 225;
+    --content-main: 15 23 42;
+    --content-strong: 51 65 85;
+    --content-normal: 71 85 105;
+    --content-muted: 100 116 139;
+    --content-faint: 148 163 184;
+    --bg-glow: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 95, 255, 0.08) 0%, transparent 60%),
+               radial-gradient(ellipse 50% 30% at 80% 80%, rgba(124, 95, 255, 0.04) 0%, transparent 50%);
+  }
+
+  /* Dark theme */
+  .dark {
+    --surface-900: 15 15 20;
+    --surface-800: 22 22 31;
+    --surface-700: 29 29 43;
+    --surface-600: 37 37 53;
+    --surface-500: 46 46 66;
+    --content-main: 255 255 255;
+    --content-strong: 203 213 225;
+    --content-normal: 148 163 184;
+    --content-muted: 100 116 139;
+    --content-faint: 71 85 105;
+    --bg-glow: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 95, 255, 0.12) 0%, transparent 60%),
+               radial-gradient(ellipse 50% 30% at 80% 80%, rgba(124, 95, 255, 0.06) 0%, transparent 50%);
+  }
+
+  body {
+    /* bg-surface-900 uses CSS vars via tailwind config — valid @apply at build time */
+    @apply bg-surface-900 font-sans antialiased;
+    /* color uses direct var() — avoids @apply resolution failure for content tokens */
+    color: rgb(var(--content-main));
+    background-image: var(--bg-glow);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    @apply bg-brand-600 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-600;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+      bg-brand-600 hover:bg-brand-500 active:bg-brand-700
+      text-white font-semibold text-sm
+      transition-all duration-200 ease-out
+      shadow-glow-sm hover:shadow-glow
+      focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-surface-800
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none;
+  }
+
+  /*
+   * btn-ghost: uses direct CSS var() for color instead of @apply text-content-*
+   * Reason: Tailwind v3 @apply cannot resolve tokens backed by CSS variables at build time.
+   */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl
+      hover:bg-surface-600 font-medium text-sm
+      transition-all duration-200 ease-out
+      focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-surface-800;
+    color: rgb(var(--content-normal));
+  }
+  .btn-ghost:hover {
+    color: rgb(var(--content-main));
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl
+      text-red-400 hover:text-white hover:bg-red-500/20
+      font-medium text-sm
+      transition-all duration-200 ease-out
+      focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-surface-800;
+  }
+
+  /*
+   * input-field: uses direct CSS var() for color/placeholder instead of @apply text-content-*
+   */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl
+      bg-surface-700 border border-surface-500
+      text-sm font-medium
+      transition-all duration-200 ease-out
+      focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:bg-surface-600;
+    color: rgb(var(--content-main));
+  }
+  .input-field::placeholder {
+    color: rgb(var(--content-muted));
+  }
+
+  .input-field.error {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500;
+  }
+
+  .card {
+    @apply bg-surface-800 border border-surface-600 rounded-2xl shadow-card
+      transition-all duration-200 ease-out;
+  }
+
+  .card-hover {
+    @apply hover:border-brand-600/40 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-purple {
+    @apply badge bg-brand-500/20 text-brand-300 border border-brand-500/30;
+  }
+
+  /* badge-slate: uses direct CSS var() — same reason as btn-ghost */
+  .badge-slate {
+    @apply badge bg-surface-600;
+    color: rgb(var(--content-normal));
+  }
+}
